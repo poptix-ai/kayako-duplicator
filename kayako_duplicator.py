@@ -43,12 +43,17 @@ def make_copy(original_bytes, destination):
     Produce a modified copy of the email for a single destination.
 
     Changes applied:
+    - To: replaced with the destination address (Kayako discards mismatches)
     - New unique Message-ID
     - Subject appended with a random 4-char tag
     - X-Kayako-Dup: 1 sentinel added
     - In-Reply-To and References stripped
     """
     msg = email.message_from_bytes(original_bytes)
+
+    # Replace To: with the destination so Kayako accepts the message
+    del msg["To"]
+    msg["To"] = destination
 
     # Replace Message-ID
     del msg["Message-ID"]

@@ -129,11 +129,16 @@ class TestPreservedFields(unittest.TestCase):
         copy = kd.make_copy(raw, "a@x.com")
         self.assertEqual(copy["From"], original["From"])
 
-    def test_to_preserved(self):
+    def test_to_set_to_destination(self):
         raw = load_fixture("simple.eml")
-        original = email.message_from_bytes(raw)
         copy = kd.make_copy(raw, "a@x.com")
-        self.assertEqual(copy["To"], original["To"])
+        self.assertEqual(copy["To"], "a@x.com")
+
+    def test_to_differs_per_copy(self):
+        raw = load_fixture("simple.eml")
+        copies = copies_for(raw, ["a@x.com", "b@x.com"])
+        self.assertEqual(copies[0]["To"], "a@x.com")
+        self.assertEqual(copies[1]["To"], "b@x.com")
 
     def test_plain_text_body_preserved(self):
         raw = load_fixture("simple.eml")
