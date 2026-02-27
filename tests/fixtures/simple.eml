@@ -1,0 +1,18 @@
+From: Alice Sender <alice@example.com>
+To: support-inbound@company.com
+Subject: Help with my order
+Message-ID: <original.abc123@example.com>
+Date: Thu, 27 Feb 2026 10:00:00 +0000
+In-Reply-To: <previous.msg@example.com>
+References: <previous.msg@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Hello,
+
+I need help with order #12345. The item arrived damaged.
+
+Please advise.
+
+Thanks,
+Alice

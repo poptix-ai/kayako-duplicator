@@ -1,0 +1,29 @@
+From: Bob Sender <bob@example.com>
+To: support-inbound@company.com
+Subject: Issue with invoice
+Message-ID: <original.xyz789@example.com>
+Date: Thu, 27 Feb 2026 11:00:00 +0000
+In-Reply-To: <earlier.thread@example.com>
+References: <earlier.thread@example.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="==boundary_12345=="
+
+--==boundary_12345==
+Content-Type: text/plain; charset=utf-8
+
+Hello,
+
+Please see the attached invoice for reference.
+
+Regards,
+Bob
+
+--==boundary_12345==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename="invoice.txt"
+
+Invoice #INV-9876
+Amount due: $150.00
+Due date: 2026-03-15
+
+--==boundary_12345==--

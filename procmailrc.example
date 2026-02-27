@@ -1,0 +1,29 @@
+# Kayako multi-queue forwarder
+# =============================================================================
+# Installation:
+#   1. Append this file's contents to /etc/procmailrc or ~/.procmailrc
+#   2. Edit the address list in the second recipe (comma-separated, no spaces)
+#   3. Ensure /usr/local/bin/kayako_duplicator.py is installed and executable
+#
+# How it works:
+#   - The first recipe silently discards (drops into /dev/null black hole)
+#     any mail that has already been processed, identified by the
+#     X-Kayako-Dup: 1 header the script adds to each re-injected copy.
+#   - The second recipe pipes all other inbound mail through the duplicator
+#     script, which sends a uniquely modified copy to each Kayako queue.
+#
+# Anti-loop guarantee:
+#   Re-injected copies carry X-Kayako-Dup: 1, so the first recipe catches
+#   them before the second recipe fires. Procmail exits immediately, and the
+#   copies are delivered normally by Postfix without re-entering this recipe.
+# =============================================================================
+
+# --- Anti-loop guard: skip already-processed duplicates ---
+:0
+* ^X-Kayako-Dup: 1
+/dev/null
+
+# --- Forward a modified copy to each Kayako queue ---
+# Edit the address list below. Use commas with no spaces between addresses.
+:0
+| /usr/local/bin/kayako_duplicator.py support@kayako.com,billing@kayako.com
