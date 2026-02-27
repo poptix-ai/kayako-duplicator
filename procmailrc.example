@@ -1,14 +1,22 @@
 # Kayako multi-queue forwarder
 # =============================================================================
 # Installation:
-#   1. Append this file's contents to /etc/procmailrc or ~/.procmailrc
+#   1. Copy this file to /etc/procmail/kayako.rc (or any path you prefer)
 #   2. Edit the address list in the second recipe (comma-separated, no spaces)
 #   3. Ensure /usr/local/bin/kayako_duplicator.py is installed and executable
+#   4. Add an alias in /etc/aliases to pipe inbound mail here:
+#
+#        kayako-inbound: "|/usr/bin/procmail -m /etc/procmail/kayako.rc"
+#
+#   5. Run: newaliases
+#
+# Postfix does NOT need procmail as its global LDA. The alias pipes only the
+# target address through procmail with this specific config file (-m flag).
+# All other mail is delivered normally.
 #
 # How it works:
-#   - The first recipe silently discards (drops into /dev/null black hole)
-#     any mail that has already been processed, identified by the
-#     X-Kayako-Dup: 1 header the script adds to each re-injected copy.
+#   - The first recipe silently drops any mail that has already been processed,
+#     identified by the X-Kayako-Dup: 1 header the script adds to each copy.
 #   - The second recipe pipes all other inbound mail through the duplicator
 #     script, which sends a uniquely modified copy to each Kayako queue.
 #
